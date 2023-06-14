@@ -5,6 +5,8 @@ use App\Models\User;
 use App\Models\Post;
 use App\Models\Category;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SessionContrller;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/post/{post:slug}', [PostController::class, 'show']);
@@ -23,3 +25,11 @@ Route::get('/post/{post:slug}', [PostController::class, 'show']);
 ////        'categories' => Category::all(),
 //    ]);
 //});
+
+Route::get('/register', [RegisterController::class, 'create'])->middleware('guest');
+Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
+
+Route::get('/login', [SessionContrller::class, 'crate'])->middleware('guest');
+Route::post('/login', [SessionContrller::class, 'store'])->middleware('guest');
+
+Route::post('/logout', [SessionContrller::class, 'destroy']);
