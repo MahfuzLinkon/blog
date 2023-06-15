@@ -24,16 +24,16 @@ class SessionContrller extends Controller
             'password' => 'required',
         ]);
 
-        if (auth()->attempt($attributes)){
-            session()->regenerate();
-            return redirect('/')->with('success', 'Welcome Back...!');
+        if (!auth()->attempt($attributes)){
+            throw ValidationException::withMessages([
+                'email' => 'Credential does not match',
+            ]);
         }
 //        return back()->withErrors([
 //            'email' => 'Credential does not match',
 //        ]);
-        throw ValidationException::withMessages([
-            'email' => 'Credential does not match',
-        ]);
+        session()->regenerate();
+        return redirect('/')->with('success', 'Welcome Back...!');
     }
 
 

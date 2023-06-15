@@ -46,6 +46,15 @@
                 <div class="space-y-4 lg:text-lg leading-loose">
                     {{ $post->body }}
                 </div>
+
+                <section class="mt-10 space-y-5">
+                    @include('posts._comment_form')
+
+                    @foreach($post->comments as $comment)
+                        <x-post-comment :comment="$comment"/>
+                    @endforeach
+                </section>
+
             </div>
         </article>
     </main>
