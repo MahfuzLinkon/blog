@@ -9,6 +9,19 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionContrller;
 use App\Http\Controllers\PostCommentContrller;
 
+Route::get('ping', function (){
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' =>  config('services.mailchimp.server'),
+    ]);
+
+    $response = $mailchimp->lists->getAllLists();
+    ddd($response);
+});
+
+
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/post/{post:slug}', [PostController::class, 'show']);
 
@@ -26,6 +39,7 @@ Route::get('/post/{post:slug}', [PostController::class, 'show']);
 ////        'categories' => Category::all(),
 //    ]);
 //});
+
 
 Route::post('post/{post:slug}/comment', [PostCommentContrller::class, 'store']);
 
